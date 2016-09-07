@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1.0">
+    <style>
+      html,body {
+        height: 100%;
+        margin: 0 auto;
+        padding: 0;
+      } 
+      #map {
+        height: 300px;
+        width: 480px;
+      }
+    </style>
+<title>Diseño Uninorte 201630</title>
+<script type="text/javascript">
+
+var intervalo;
+var intervalo1;
+var A;
+var B;
+var reader1 = new XMLHttpRequest() || new ActiveXObject('MSXML2.XMLHTTP');
+var reader2 = new XMLHttpRequest() || new ActiveXObject('MSXML2.XMLHTTP');
+var reader3 = new XMLHttpRequest() || new ActiveXObject('MSXML2.XMLHTTP');
+var reader4 = new XMLHttpRequest() || new ActiveXObject('MSXML2.XMLHTTP');
+var myLatLng;
+var map;
+
+function func1(){
+
+reader1.open('get', 'Hora.txt', true); 
+reader1.onreadystatechange = displayContents;
+reader1.send(null);
+
+reader2.open('get', 'Fecha.txt', true); 
+reader2.onreadystatechange = displayContents;
+reader2.send(null);
+
+reader3.open('get', 'Latitud.txt', true); 
+reader3.onreadystatechange = displayContents;
+reader3.send(null);
+
+reader4.open('get', 'Longitud.txt', true); 
+reader4.onreadystatechange = displayContents;
+reader4.send(null);
+
+
+}
+
+
+
+function displayContents() {
+    if(reader1.readyState==4) { 
+        var el = document.getElementById('main1');
+        el.innerHTML = reader1.responseText;
+    }
+    if(reader2.readyState==4) { 
+        var el = document.getElementById('main2');
+        el.innerHTML = reader2.responseText;
+    }
+    if(reader3.readyState==4) { 
+        var el = document.getElementById('main3');
+        el.innerHTML = reader3.responseText;
+        A = reader3.responseText;
+    }
+    if(reader4.readyState==4) { 
+        var el = document.getElementById('main4');
+        el.innerHTML = reader4.responseText;
+        B = reader4.responseText;
+    }
+
+}
+
+intervalo = setInterval('func1()' ,5000);
+func1();
+
+
+function initMap() {
+ 
+  A1 = parseFloat(A);
+  B1 = parseFloat(B);
+
+  var myLatLng = {lat: A1, lng: B1};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 17,
+    center: myLatLng
+  });
+}
+
+function addMarker() {
+  A1 = parseFloat(A);
+  B1 = parseFloat(B);
+
+  var myLatLng = {lat: A1, lng: B1};
+  var marker = new google.maps.Marker({
+    
+    position: myLatLng,
+    animation: google.maps.Animation.DROP,
+    map:map,
+    title: 'You are Here'
+  });
+  marker.setMap(map);
+}
+
+//intervalo1 = setInterval('addMarker()' ,5000);
+//addMarker();
+
+
+</script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsFelqvBHeiBZ9KEmCJ31cVXQjdo0aASk&callback=initMap"
+        async defer>
+          
+        </script>
+  
+
+</head>
+<body>
+
+<center>
+<font face="helvetica">
+<div id="container">
+
+   <h2>Diseño Electrónico</h2>
+
+  <table border="3">
+      <thead>
+          <tr>
+              <th>  Hora  </th>
+              <th>  Fecha  </th>
+              <th>  Latitud  </th>
+              <th>  Longitud  </th>
+          </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+            <td style="width:100px"> <center id='main1'></center> </td>
+            <td style="width:100px"> <center id='main2'></center> </td>
+            <td style="width:100px"> <center id='main3'></center> </td>
+            <td style="width:100px"> <center id='main4'></center> </td>
+        </tr>
+      </tbody>
+  </table>
+
+  
+    
+</div>  
+
+<br>
+<br>
+
+  <table border="3">
+<thead>
+          <tr>
+              <th>  MAPA  </th>
+          </tr>
+</thead>
+<tbody>
+        <tr>
+            <td > <center id='map'></center> </td>
+                    
+        </tr>
+      </tbody>
+</table>
+
+<p><strong>Presentado por:</strong>
+  <br>Hernan Carrillo 
+  <br>Cristian Cepeda 
+  <br>Juan Diego Cotes
+  <br>Andrea Fontalvo 
+  <br>
+  <br><strong>Universidad del Norte
+  <br>2016 </strong></p>
+
+
+
+
+
+
+</font>
+</center>
+
+</body>
+</html> 
